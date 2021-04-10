@@ -62,6 +62,16 @@ namespace GradeBook
             Console.WriteLine($"Book: {name} Total grade is {this.GetTotal()}");
         }
 
+        public Statistics GetStatistics()
+        {
+            var stats = new Statistics();
+            stats.Average = this.GetAverage();
+            stats.MaxValue = this.GetMax();
+            stats.MinValue = this.GetMin();
+
+            return stats;
+        }
+
         // private
 
         private List<double> gradeList;
