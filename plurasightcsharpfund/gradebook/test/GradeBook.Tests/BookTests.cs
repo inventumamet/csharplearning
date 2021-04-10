@@ -6,6 +6,17 @@ namespace GradeBook.Tests
     public class BookTests
     {
         [Fact]
+        public void TestGradeLetter()
+        {
+            var book = new Book("grade letter book");
+            book.AddGrade(100);
+            book.AddGrade(90);
+            book.AddGrade(95);
+
+            Assert.Equal("A", book.GetGradeLetter());
+        }
+
+        [Fact]
         public void TestBook()
         {
             var book = new Book("test book");

@@ -20,11 +20,41 @@ namespace GradeBook
         {
 
             var book = new Book("book 1");
-            book.AddGrade(23.2);
-            book.AddGrade(80.5);
-            book.AddGrade(90.6);
+            // book.AddGrade(23.2);
+            // book.AddGrade(80.5);
+            // book.AddGrade(90.6);
+            System.Console.WriteLine("Please enter values (or 'q' to quit):");
+
+            for (var i = 0; i < 10; ++i) 
+            {
+                var input = Console.ReadLine();
+                if (input == "q")
+                {
+                    break;
+                }
+                else
+                {
+                    try {
+                        var gradeValue = Convert.ToDouble(input);
+                        book.AddGrade(gradeValue);
+                    }
+                    catch (FormatException ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+                    }
+                    finally
+                    {
+                        System.Console.WriteLine("**");
+                    }
+                }
+            }
 
             book.PrintStatistic();
+
 
             double[] numbers = new double[]{12.7, 10.3, 6.11};
             for (var i = 0; i < numbers.Length; ++i)

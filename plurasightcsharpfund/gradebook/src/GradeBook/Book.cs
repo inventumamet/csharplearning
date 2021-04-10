@@ -11,6 +11,16 @@ namespace GradeBook
             gradeList = new List<double>();
             this.name = name;
         }
+
+        public string GetName()
+        {
+            return this.name;
+        }
+
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
         public double GetTotal()
         {
             return Math.Sum(this.gradeList);
@@ -19,6 +29,25 @@ namespace GradeBook
         public double GetAverage()
         {
             return Math.Average(this.gradeList);
+        }
+
+        public string GetGradeLetter()
+        {
+            switch (this.GetAverage())
+            {
+                case var avg when avg >= 90.0:
+                    return "A";
+                case var avg when avg >= 80.0:
+                    return "B";
+                case var avg when avg >= 70.0:
+                    return "C";
+                case var avg when avg >= 60.0:
+                    return "D";
+                case var avg when avg >= 50.0:
+                    return "E";
+                default:
+                    return "F";
+            }
         }
 
         public double GetMax()
@@ -51,7 +80,14 @@ namespace GradeBook
 
         public void AddGrade(double newGrade)
         {
-            this.gradeList.Add(newGrade);
+            if (newGrade > 100 || newGrade < 0)
+            {
+                throw new ArgumentException("Must enter values between 0 and 100 for new grades.");
+            }
+            else
+            {
+                this.gradeList.Add(newGrade);
+            }
         }
 
         public void PrintStatistic()
