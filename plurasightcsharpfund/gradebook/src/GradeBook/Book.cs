@@ -11,15 +11,22 @@ namespace GradeBook
             gradeList = new List<double>();
             this.name = name;
         }
-
-        public string GetName()
-        {
-            return this.name;
-        }
-
-        public void SetName(string name)
-        {
-            this.name = name;
+        public string Name {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    name = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Must enter a non-empty string for the name.");
+                }
+            }
         }
         public double GetTotal()
         {
@@ -90,12 +97,40 @@ namespace GradeBook
             }
         }
 
-        public void PrintStatistic()
+        public void AddGrade(string gradeLetter)
         {
-            Console.WriteLine($"Book: {name} Max grade is {this.GetMax()}");
-            Console.WriteLine($"Book: {name} Min grade is {this.GetMin()}");
-            Console.WriteLine($"Book: {name} Average grade is {this.GetAverage()}");
-            Console.WriteLine($"Book: {name} Total grade is {this.GetTotal()}");
+            switch (gradeLetter)
+            {
+                case "A":
+                    this.AddGrade(90);
+                    break;
+                case "B":
+                    this.AddGrade(80);
+                    break;
+                case "C":
+                    this.AddGrade(70);
+                    break;
+                case "D":
+                    this.AddGrade(70);
+                    break;
+                case "E":
+                    this.AddGrade(70);
+                    break;
+                case "F":
+                    this.AddGrade(70);
+                    break;
+                default:
+                    throw new ArgumentException("Unknown grade letter, please enter A,B,C,D,E or F only.");
+            }
+        }
+
+        public delegate void LogWriterDelegate(string logMessage);
+        public void PrintStatistic(LogWriterDelegate writer)
+        {
+            writer($"Book: {name} Max grade is {this.GetMax()}");
+            writer($"Book: {name} Min grade is {this.GetMin()}");
+            writer($"Book: {name} Average grade is {this.GetAverage()}");
+            writer($"Book: {name} Total grade is {this.GetTotal()}");
         }
 
         public Statistics GetStatistics()

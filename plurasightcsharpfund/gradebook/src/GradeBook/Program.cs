@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GradeBook
 {
@@ -15,9 +16,17 @@ namespace GradeBook
             return result;
         }
 
+        private static void WriteToTerminal(string logMessage)
+        {
+            System.Console.WriteLine(logMessage);
+        }
 
         static void Main(string[] args)
         {
+
+            StreamWriter f = new StreamWriter("test.txt");
+            f.WriteLine("test");
+            f.Close();
 
             var book = new Book("book 1");
             // book.AddGrade(23.2);
@@ -34,6 +43,18 @@ namespace GradeBook
                 }
                 else
                 {
+                    if (input.Length == 1)
+                    {
+                        try {
+                            book.AddGrade(input);
+                            continue;
+                        }
+                        catch (ArgumentException)
+                        {
+                            // do nothing
+                        }
+                    }
+
                     try {
                         var gradeValue = Convert.ToDouble(input);
                         book.AddGrade(gradeValue);
@@ -53,7 +74,12 @@ namespace GradeBook
                 }
             }
 
-            book.PrintStatistic();
+            FileLogger fileLogger = new FileLogger("BookLog.txt");
+
+            Book.LogWriterDelegate log;
+            log = WriteToTerminal;
+            log += fileLogger.writeLineToFile;
+            book.PrintStatistic(log);
 
 
             double[] numbers = new double[]{12.7, 10.3, 6.11};
