@@ -28,7 +28,7 @@ namespace GradeBook
             f.WriteLine("test");
             f.Close();
 
-            var book = new Book("book 1");
+            var book = new MemoryBook("book 1");
             // book.AddGrade(23.2);
             // book.AddGrade(80.5);
             // book.AddGrade(90.6);

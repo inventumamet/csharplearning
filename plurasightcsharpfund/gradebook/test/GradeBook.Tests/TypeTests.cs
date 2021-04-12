@@ -46,7 +46,7 @@ namespace GradeBook.Tests
 
         private Book GetBook(string name)
         {
-            return new Book(name);
+            return new MemoryBook(name);
         }
     }
 }

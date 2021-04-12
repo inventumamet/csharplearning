@@ -8,7 +8,7 @@ namespace GradeBook.Tests
         [Fact]
         public void TestGradeLetter()
         {
-            var book = new Book("grade letter book");
+            var book = new MemoryBook("grade letter book");
             book.AddGrade(100);
             book.AddGrade(90);
             book.AddGrade(95);
@@ -19,7 +19,7 @@ namespace GradeBook.Tests
         [Fact]
         public void TestBook()
         {
-            var book = new Book("test book");
+            var book = new MemoryBook("test book");
             book.AddGrade(12.5);
             book.AddGrade(50.8);
             book.AddGrade(100);
@@ -31,7 +31,7 @@ namespace GradeBook.Tests
         [Fact]
         public void TestGetStatistics()
         {
-            var book = new Book("test stats");
+            var book = new MemoryBook("test stats");
             book.AddGrade(12.5);
             book.AddGrade(50.8);
             book.AddGrade(100);

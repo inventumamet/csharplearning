@@ -4,13 +4,15 @@ using System.Linq;
 
 namespace GradeBook
 {
-    public class Book 
+
+    public interface IBook
     {
-        public Book(string name)
-        {
-            gradeList = new List<double>();
-            this.name = name;
-        }
+        Statistics GetStatistics();
+    }
+
+    public abstract class Book : IBook
+    {
+        private string name;
         public string Name {
             get
             {
@@ -28,6 +30,22 @@ namespace GradeBook
                 }
             }
         }
+        public Book(string name)
+        {
+            this.Name = name;
+        }
+
+        public abstract Statistics GetStatistics();
+        public delegate void LogWriterDelegate(string logMessage);
+    }
+
+    public class MemoryBook : Book
+    {
+        public MemoryBook(string name) : base(name)
+        {
+            gradeList = new List<double>();
+        }
+
         public double GetTotal()
         {
             return Math.Sum(this.gradeList);
@@ -124,19 +142,18 @@ namespace GradeBook
             }
         }
 
-        public delegate void LogWriterDelegate(string logMessage);
         public void PrintStatistic(LogWriterDelegate writer)
         {
-            writer($"Book: {name} Max grade is {this.GetMax()}");
-            writer($"Book: {name} Min grade is {this.GetMin()}");
-            writer($"Book: {name} Average grade is {this.GetAverage()}");
-            writer($"Book: {name} Total grade is {this.GetTotal()}");
+            writer($"Book: {this.Name} Max grade is {this.GetMax()}");
+            writer($"Book: {this.Name} Min grade is {this.GetMin()}");
+            writer($"Book: {this.Name} Average grade is {this.GetAverage()}");
+            writer($"Book: {this.Name} Total grade is {this.GetTotal()}");
         }
 
-        public Statistics GetStatistics()
+        public override Statistics GetStatistics()
         {
-            var stats = new Statistics();
-            stats.Average = this.GetAverage();
+            var stats = new Statistics(this.gradeList);
+            // stats.Average = this.GetAverage();
             stats.MaxValue = this.GetMax();
             stats.MinValue = this.GetMin();
 
@@ -146,6 +163,6 @@ namespace GradeBook
         // private
 
         private List<double> gradeList;
-        private string name;
+
     }
 }
