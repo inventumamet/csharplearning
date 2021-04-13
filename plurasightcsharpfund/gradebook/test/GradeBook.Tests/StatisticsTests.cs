@@ -15,14 +15,17 @@ namespace GradeBook.Tests
             Assert.Equal(3, stat.Average);
         }
 
+        ///<summary> 
+        /// Test that statistics will throw and except when tried
+        /// to be initialised with null.
+        ///</summary>
         [Fact]
         public void CannotSetDataInputToNull()
         {
-            List<double> inputArray = null;
             var ex =  Assert.Throws<ArgumentException>( 
                 () => 
                     {
-                        var stat = new Statistics(inputArray);
+                        var stat = new Statistics(null);
                     }
                 );
 
