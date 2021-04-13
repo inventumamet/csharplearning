@@ -15,7 +15,7 @@ namespace GradeBook
             this.FileName = $"{Name}.txt";
             using (var file = new StreamWriter(this.FileName))
             {
-                file.WriteLine("");
+                file.Write("");
                 file.Flush();
             }
         }
