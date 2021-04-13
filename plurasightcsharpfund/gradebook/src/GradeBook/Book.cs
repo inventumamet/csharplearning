@@ -8,6 +8,7 @@ namespace GradeBook
     public interface IBook
     {
         Statistics GetStatistics();
+        void AddGrade(double grade);
     }
 
     public abstract class Book : IBook
@@ -36,6 +37,8 @@ namespace GradeBook
         }
 
         public abstract Statistics GetStatistics();
+        public abstract void AddGrade(double grade);
+
         public delegate void LogWriterDelegate(string logMessage);
     }
 
@@ -103,15 +106,15 @@ namespace GradeBook
             return minValue;
         }
 
-        public void AddGrade(double newGrade)
+        public override void  AddGrade(double grade)
         {
-            if (newGrade > 100 || newGrade < 0)
+            if (grade > 100 || grade < 0)
             {
                 throw new ArgumentException("Must enter values between 0 and 100 for new grades.");
             }
             else
             {
-                this.gradeList.Add(newGrade);
+                this.gradeList.Add(grade);
             }
         }
 
@@ -159,7 +162,6 @@ namespace GradeBook
 
             return stats;
         }
-
         // private
 
         private List<double> gradeList;
