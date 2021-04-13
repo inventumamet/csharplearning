@@ -14,5 +14,19 @@ namespace GradeBook.Tests
 
             Assert.Equal(3, stat.Average);
         }
+
+        [Fact]
+        public void CannotSetDataInputToNull()
+        {
+            List<double> inputArray = null;
+            var ex =  Assert.Throws<ArgumentException>( 
+                () => 
+                    {
+                        var stat = new Statistics(inputArray);
+                    }
+                );
+
+            Assert.Equal("inputArray must not be null", ex.Message);
+        }
     }
 }
