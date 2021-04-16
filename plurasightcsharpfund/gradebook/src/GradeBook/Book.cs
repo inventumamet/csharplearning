@@ -78,34 +78,6 @@ namespace GradeBook
             }
         }
 
-        public double GetMax()
-        {
-            double maxValue = double.MinValue;
-            foreach (var value in this.gradeList)
-            {
-                if (value > maxValue)
-                {
-                    maxValue = value;
-                }
-            }
-            return maxValue;
-            // var query = from value in this.gradeList orderby value descending select value;
-            // return query[0];
-        }
-
-        public double GetMin()
-        {
-            double minValue = double.MaxValue;
-            foreach (var value in this.gradeList)
-            {
-                if (value < minValue)
-                {
-                    minValue = value;
-                }
-            }
-            return minValue;
-        }
-
         public override void  AddGrade(double grade)
         {
             if (grade > 100 || grade < 0)
@@ -147,20 +119,16 @@ namespace GradeBook
 
         public void PrintStatistic(LogWriterDelegate writer)
         {
-            writer($"Book: {this.Name} Max grade is {this.GetMax()}");
-            writer($"Book: {this.Name} Min grade is {this.GetMin()}");
-            writer($"Book: {this.Name} Average grade is {this.GetAverage()}");
-            writer($"Book: {this.Name} Total grade is {this.GetTotal()}");
+            var stats = this.GetStatistics();
+            writer($"Book: {this.Name} Max grade is {stats.MaxValue}");
+            writer($"Book: {this.Name} Min grade is {stats.MinValue}");
+            writer($"Book: {this.Name} Average grade is {stats.Average}");
+            writer($"Book: {this.Name} Total grade is {stats.Total}");
         }
 
         public override Statistics GetStatistics()
         {
-            var stats = new Statistics(this.gradeList);
-            // stats.Average = this.GetAverage();
-            stats.MaxValue = this.GetMax();
-            stats.MinValue = this.GetMin();
-
-            return stats;
+            return new Statistics(this.gradeList);
         }
         // private
 

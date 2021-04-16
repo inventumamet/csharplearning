@@ -37,6 +37,12 @@ namespace GradeBook.Tests
             Assert.Equal("5.2", expected_lines[0]);
             Assert.Equal("17.5", expected_lines[1]);
 
+            var stats = book.GetStatistics();
+            Assert.Equal(17.5, stats.MaxValue);
+            Assert.Equal(5.2, stats.MinValue);
+            Assert.Equal(22.7, stats.Total);
+            Assert.Equal(11.35, stats.Average);
+
             File.Delete("testbook.txt");
         }
 

@@ -24,7 +24,7 @@ namespace GradeBook.Tests
             book.AddGrade(50.8);
             book.AddGrade(100);
 
-            Assert.Equal(100, book.GetMax());
+            Assert.Equal(100, book.GetStatistics().MaxValue);
 
         }
 

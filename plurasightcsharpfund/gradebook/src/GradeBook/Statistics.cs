@@ -23,8 +23,32 @@ namespace GradeBook
             }
             private set {}
         }
-        public double MinValue;
-        public double MaxValue;
+        
+        public double Total
+        {
+            get
+            {
+                return Math.Sum(this.data);
+            }
+            private set {}
+        }
+        public double MinValue
+        {
+            get
+            {
+                return Math.GetMin(this.data);
+            }
+            private set {}
+        }
+        public double MaxValue
+        {
+            get
+            {
+                return Math.GetMax(this.data);
+            }
+            private set {}
+        }
+
 
 
     }

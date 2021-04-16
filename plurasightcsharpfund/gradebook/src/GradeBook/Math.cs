@@ -25,5 +25,31 @@ namespace GradeBook
                 return Sum(inputArray) / inputArray.Count;
             }
         }
+
+        public static double GetMax(List<double> inputArray)
+        {
+            double maxValue = double.MinValue;
+            foreach (var value in inputArray)
+            {
+                if (value > maxValue)
+                {
+                    maxValue = value;
+                }
+            }
+            return maxValue;
+        }
+
+        public static double GetMin(List<double> inputArray)
+        {
+            double minValue = double.MaxValue;
+            foreach (var value in inputArray)
+            {
+                if (value < minValue)
+                {
+                    minValue = value;
+                }
+            }
+            return minValue;
+        }
     }
 }
