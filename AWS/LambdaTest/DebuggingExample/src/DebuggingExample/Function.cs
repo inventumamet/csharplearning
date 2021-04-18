@@ -78,6 +78,10 @@ namespace DebuggingExample
 
         }
 
+        class RequestDataObject
+        {
+            public int code;
+        }
 
         /// <summary>
         /// A Lambda function to respond to HTTP Get methods from API Gateway
@@ -88,6 +92,23 @@ namespace DebuggingExample
         {
             // context.Logger.LogLine("Get Request\n");
             LogMessage(context, "Processing request started");
+
+            var requestCode = new Func<string, int?>( (requestBody) => {
+                try {
+                    return JsonSerializer.Deserialize<RequestDataObject>(request.Body).code;
+                }
+                catch (JsonException)
+                {
+                    return null;
+                }
+
+            })(request.Body);
+
+            if (!requestCode.HasValue)
+            {
+                LogMessage(context, "Unable to understand input");
+                return CreateResponse(null);
+            }
 
             APIGatewayProxyResponse response;
             try 
