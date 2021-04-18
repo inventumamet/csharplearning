@@ -78,9 +78,9 @@ namespace DebuggingExample
 
         }
 
-        class RequestDataObject
+        public class RequestDataObject
         {
-            public int code;
+            public int code {get; set;}
         }
 
         /// <summary>
@@ -93,9 +93,17 @@ namespace DebuggingExample
             // context.Logger.LogLine("Get Request\n");
             LogMessage(context, "Processing request started");
 
+            var objectToSerialise = new RequestDataObject(){code = 1};
+            var jsonText = JsonSerializer.Serialize(objectToSerialise);
+
             var requestCode = new Func<string, int?>( (requestBody) => {
+                if (requestBody == null)
+                {
+                    return null;
+                }
+
                 try {
-                    return JsonSerializer.Deserialize<RequestDataObject>(request.Body).code;
+                    return JsonSerializer.Deserialize<RequestDataObject>(requestBody).code;
                 }
                 catch (JsonException)
                 {

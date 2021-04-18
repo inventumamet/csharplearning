@@ -29,6 +29,7 @@ namespace DebuggingExample.Tests
 
 
             request = new APIGatewayProxyRequest();
+            request.Body = "{\"code\": 5}";
             context = new TestLambdaContext();
             response = functions.Get(request, context);
             Assert.Equal(200, response.StatusCode);

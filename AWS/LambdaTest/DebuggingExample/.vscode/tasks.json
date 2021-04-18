@@ -74,5 +74,22 @@
             }
             // "problemMatcher": "$msCompile"
         },
+        {
+            "label": "cleanupCloud",
+            "command": "aws",
+            "type": "shell",
+            "args": [
+                "cloudformation",
+                "delete-stack",
+                "--stack-name=DebugginExampleStack",
+                "--profile=sandbox",
+                "--region=ap-southeast-2",
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+            // "problemMatcher": "$msCompile"
+        },
     ]
 }
