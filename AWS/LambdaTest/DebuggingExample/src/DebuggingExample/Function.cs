@@ -92,6 +92,26 @@ namespace DebuggingExample
         {
             // context.Logger.LogLine("Get Request\n");
             LogMessage(context, "Processing request started");
+            if (request.Body != null)
+            {
+                LogMessage(context, $"Requst body: {request.Body}");
+            }
+            else
+            {
+                LogMessage(context, "Request body is null");
+            }
+            if (request.QueryStringParameters != null)
+            {
+                foreach (var entry in request.QueryStringParameters)
+                {
+                    LogMessage(context, $"Request QueryString entry: {entry}");
+                }
+            }
+            else
+            {
+                LogMessage(context, "Request Query String null");
+            }
+            // LogMessage(context, $"Requst QueryStringParameters: {request.QueryStringParameters}");
 
             var objectToSerialise = new RequestDataObject(){code = 1};
             var jsonText = JsonSerializer.Serialize(objectToSerialise);
