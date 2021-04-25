@@ -7,6 +7,21 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "src:DebuggingExample::DebuggingExample.Functions::Get (dotnetcore3.1)",
+            "invokeTarget": {
+                "target": "code",
+                "projectRoot": "${workspaceFolder}/src/DebuggingExample",
+                "lambdaHandler": "DebuggingExample::DebuggingExample.Functions::Get"
+            },
+            "lambda": {
+                "runtime": "dotnetcore3.1",
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "Invoke Template Lambda",
             "invokeTarget": {
                 "target": "template",
