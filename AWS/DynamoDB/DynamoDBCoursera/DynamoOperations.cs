@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using Amazon.Runtime;
+using Newtonsoft.Json;
 
 namespace DynamoDBCoursera
 {
@@ -28,10 +31,10 @@ namespace DynamoDBCoursera
                 {"Attack", new AttributeValue("10")},
                 {"Defense", new AttributeValue("7")},
             };
-
+            
             var task = dynamodbClient.PutItemAsync(putItemRequest);
             task.Wait();
-
+            
             putItemRequest.Item = new Dictionary<string, AttributeValue>()
             {
                 {"DragonName", new AttributeValue("tallie")},
@@ -40,12 +43,63 @@ namespace DynamoDBCoursera
                 {"Attack", new AttributeValue("7")},
                 {"Defense", new AttributeValue("10")},
             };
-
+            
             task = dynamodbClient.PutItemAsync(putItemRequest);
             task.Wait();
-            
+
+
+
+
         }
 
+        public void BatchUploadExample()
+        {
+            
+            var cred = CredentialManagement.GetCredentials();
+            using var dynamodbClient = new AmazonDynamoDBClient(cred);
+            
+            var bwir = new BatchWriteItemRequest();
+            bwir.RequestItems = new Dictionary<string, List<WriteRequest>>()
+            {
+                { 
+                    "Lab1Table",  
+                    new List<WriteRequest>() {
+                        new WriteRequest()
+                        {
+                            PutRequest = new PutRequest() 
+                            {
+                                Item = new Dictionary<string, AttributeValue>()
+                                {
+                                    {"DragonName", new AttributeValue("tallie")},
+                                    {"DragonType", new AttributeValue("red")},
+                                    {"Description", new AttributeValue("breathes fire")},
+                                    {"Attack", new AttributeValue("7")},
+                                    {"Defense", new AttributeValue("10")},
+                                }
+                            }
+                        },
+                        new WriteRequest()
+                        {
+                            PutRequest = new PutRequest() 
+                            {
+                                Item = new Dictionary<string, AttributeValue>()
+                                {
+                                    {"DragonName", new AttributeValue("sparky")},
+                                    {"DragonType", new AttributeValue("green")},
+                                    {"Description", new AttributeValue("breathes acid")},
+                                    {"Attack", new AttributeValue("10")},
+                                    {"Defense", new AttributeValue("7")},
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var task = dynamodbClient.BatchWriteItemAsync(bwir);
+            task.Wait();
+        }
+        
         public void ScanTable()
         {
             var cred = CredentialManagement.GetCredentials();
@@ -70,7 +124,12 @@ namespace DynamoDBCoursera
                     Console.WriteLine($"\t{pair.Key}: {pair.Value.S}");
                 }
             }
+
+            var jsonOutput = JsonConvert.SerializeObject(result);
             
+            Console.WriteLine(jsonOutput);
+            
+            File.WriteAllText("data.json", jsonOutput);
 
             // task.Result.Items.Select(values => values.Select(pair => Console.WriteLine($"{pair.Key}: {pair.Value}")));
         }

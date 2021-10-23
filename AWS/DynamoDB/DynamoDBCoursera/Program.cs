@@ -10,7 +10,7 @@ namespace DynamoDBCoursera
             var dynamoOperations = new DynamoOperations();
             dynamoOperations.UploadExample();
             // dynamoOperations.ScanTable();
-            dynamoOperations.QueryItem("tallie");
+            // dynamoOperations.QueryItem("tallie");
         }
     }
 }
